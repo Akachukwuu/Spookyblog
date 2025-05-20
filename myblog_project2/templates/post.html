@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }} | My Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'details.css' %}">
+    <link rel="stylesheet" href="{% static 'comment.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="post-meta">
+            By <strong>{{ post.author }}</strong> &middot; {{ post.created_at|date:"F d, Y" }}
+        </div>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post image" class="post-image">
+        {% endif %}
+        <div class="post-content">
+            {{ post.content|safe }}
+        </div>
+        <a href="{% url 'index' %}" class="back-link">&larr; Back to all posts</a>
+        <div style="display: flex; gap: 12px; margin: 32px 0;"></div>
+            <a href="{% url 'edit_post' pk=post.pk %}" style="background: #4f8cff; color: #fff; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 8px rgba(79,140,255,0.12); transition: background 0.2s;">
+                &#9998; Edit
+            </a>
+            <form action="{% url 'delete_post' pk=post.pk %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: #ff4f4f; margin-left: 2em; color: #fff; padding: 10px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(255,79,79,0.12); transition: background 0.2s;">
+                    &#128465; Delete
+                </button>
+            </form>
+        </div>
+    </div>
+
+<div class="comments-section">
+    <h2 style="text-align: center;" class="comments-title">Comments</h2>
+    {% for comment in comments %}
+    <div class="comment-card" style="max-width: 600px; margin: 24px auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 32px 24px; text-align: center;">
+        <div class="comment-author" style="font-weight: 700; font-size: 1.2em; color: #2d3748; margin-bottom: 8px;">
+            {{ comment.author }}
+        </div>
+        <div class="comment-content" style="font-size: 1.1em; color: #444; margin-bottom: 12px;">
+            {{ comment.content }}
+        </div>
+        <div class="comment-date" style="font-size: 0.95em; color: #888;">
+            {{ comment.created_at|date:"F d, Y H:i" }}
+        </div>
+    </div>
+    {% empty %}
+    <p style="text-align:center; color:#888; margin: 32px 0;">No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
+
+    <div class="comment-form-container">
+        <h2>Leave a Comment</h2>
+        <form class="comment-form" method="POST">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Write your comment here..."></textarea>
+            <button type="submit">Respond</button>
+        </form>
+    </div>
+</body>
+</html>

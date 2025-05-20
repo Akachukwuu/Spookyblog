@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyBlog - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    
+
+    <section class="hero">
+        <h1>Welcome to MyBlog</h1>
+        <p>Explore powerful stories, share what's on your mind, and connect with a lively community of fellow writers and readers.</p>
+    </section>
+    
+    {% for post in posts reversed %}
+    <section class="posts">
+        <div class="post-card">
+            <a style="text-decoration: none;" href="/post/{{post.id}}"><div class="post-title">{{post.title}}</div></a>
+            <div class="post-meta">by {{post.author}} · {{post.created_at}}</div>
+            <div class="post-excerpt">
+                {{post.content|truncatewords:30}}
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create toggle button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = 'Toggle Light/Dark Mode';
+        toggleBtn.style.position = 'fixed';
+        toggleBtn.style.bottom = '20px';
+        toggleBtn.style.right = '20px';
+        toggleBtn.style.zIndex = '1000';
+        document.body.appendChild(toggleBtn);
+
+        // Define dark mode styles
+        const darkModeStyles = `
+            body.dark-mode {
+                background: #181818 !important;
+                color: #f1f1f1 !important;
+            }
+            body.dark-mode .post-card {
+                background: #232323 !important;
+                color: #f1f1f1 !important;
+            }
+            body.dark-mode .post-title, 
+            body.dark-mode .post-meta, 
+            body.dark-mode .post-excerpt {
+                color: #f1f1f1 !important;
+            }
+            body.dark-mode .hero {
+                background: #222 !important;
+                color: #f1f1f1 !important;
+            }
+            body.dark-mode nav, 
+            body.dark-mode .navbar {
+                background: #222 !important;
+            }
+        `;
+        const styleTag = document.createElement('style');
+        styleTag.textContent = darkModeStyles;
+        document.head.appendChild(styleTag);
+
+        // Load mode from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        // Basic styling for the toggle button
+        toggleBtn.style.background = '#444';
+        toggleBtn.style.color = '#fff';
+        toggleBtn.style.border = 'none';
+        toggleBtn.style.padding = '10px 18px';
+        toggleBtn.style.borderRadius = '6px';
+        toggleBtn.style.cursor = 'pointer';
+        toggleBtn.style.fontFamily = 'Montserrat, sans-serif';
+        toggleBtn.style.fontSize = '16px';
+        toggleBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        toggleBtn.style.transition = 'background 0.2s';
+
+        toggleBtn.addEventListener('mouseenter', function() {
+            toggleBtn.style.background = '#222';
+        });
+        toggleBtn.addEventListener('mouseleave', function() {
+            toggleBtn.style.background = '#444';
+        });
+        toggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

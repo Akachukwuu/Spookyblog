@@ -1,0 +1,23 @@
+    
+    {% if user.is_authenticated %}
+
+    <nav class="navbar">
+        <div class="logo">MyBlog</div>
+        <ul>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+            <li><a href="{% url 'create_post' %}">Create Post</a></li>
+            <li><a href="{% url 'index' %}">Dashboard</a></li>
+            <li><a href="">{{user.username}}</a></li>
+        </ul>
+    </nav>
+
+    {% else %}
+        <nav class="navbar">
+        <div class="logo">MyBlog</div>
+        <ul>
+            <li><a href="{% url 'register' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Sign In</a></li>
+            <li><a href="">{{user.username}}</a></li>
+        </ul>
+    </nav>
+    {% endif %}

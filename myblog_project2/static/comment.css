@@ -1,0 +1,49 @@
+       body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f76d6d;
+            margin: 0;
+            padding: 0;
+        }
+        .comment-form-container {
+            background: #fff;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 30px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .comment-form-container h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .comment-form textarea {
+            width: 100%;
+            min-height: 80px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 18px;
+            transition: border 0.2s;
+        }
+        .comment-form textarea:focus {
+            border-color: #0078d7;
+            outline: none;
+        }
+        .comment-form button {
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            margin: 0 auto;
+        }
+        .comment-form button:hover {
+            background: #005fa3;
+        }
