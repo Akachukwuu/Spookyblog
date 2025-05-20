@@ -6,7 +6,7 @@ services:
     startCommand: gunicorn blog.wsgi
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: blog.settings
+        value: myblog_project2.settings
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
