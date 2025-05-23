@@ -18,9 +18,9 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['email']
+        email = request.POST.get('email')
         password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
+        confirm_password = request.POST.get('confirm_password')
 
         if password == confirm_password:
             if User.objects.filter(username=username).exists():
@@ -53,7 +53,7 @@ def login_view(request):
             messages.success(request, 'Login successful')
             return render(request, 'index.html')
         else:
-            messages.error(request, 'Invalid Details')
+            messages.error(request, 'No user found')
             return redirect('login')
     else:  
         return render(request, 'login.html')
